@@ -17,14 +17,14 @@ const ContactList = () => {
   }, [dispatch])
 
   return (
-    <>
+    <div className="contact-block">
       {isLoading ? <Spinner/> : contacts.map((contact) => (
         <ContactItem
           key={contact.id}
           contact={contact}
         />
       ))}
-    </>
+    </div>
   );
 };
 

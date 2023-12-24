@@ -30,7 +30,8 @@ const ContactForm: React.FC<Props> = ({onSubmit, isLoading}) => {
 
     onSubmit(contact);
   };
-  return (
+
+  let form = (
     <form className="form" onSubmit={onFormSubmit}>
       <div className="form-group">
         <label htmlFor="name">Name</label>
@@ -76,8 +77,15 @@ const ContactForm: React.FC<Props> = ({onSubmit, isLoading}) => {
           onChange={changeDish}
         />
       </div>
-      <button className="btn btn-success" type="submit">Save</button>
+      <button className="btn btn-success" type="submit" disabled={isLoading}>
+        {isLoading ? 'Saving...' : 'Save'}
+      </button>
     </form>
+  )
+  return (
+    <>
+      {form}
+    </>
   );
 };
 
