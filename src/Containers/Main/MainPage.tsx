@@ -1,7 +1,7 @@
 import React from 'react';
 import ContactList from '../../Components/ContactList/ContactList';
 
-const Main = () => {
+const MainPage = () => {
   return (
     <div>
       <ContactList/>
@@ -9,4 +9,4 @@ const Main = () => {
   );
 };
 
-export default Main;
+export default MainPage;

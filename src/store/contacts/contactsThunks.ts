@@ -1,6 +1,6 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import axiosApi from '../../axiosApi';
-import {ApiContacts, ContactsJson} from '../../types';
+import {ApiContacts, Contact, ContactsJson} from '../../types';
 
 export const fetchContactsData = createAsyncThunk<ApiContacts[], void>(
   'contacts',
@@ -9,10 +9,6 @@ export const fetchContactsData = createAsyncThunk<ApiContacts[], void>(
     const contactsJson = response.data;
 
     let contacts: ApiContacts[] = [];
-
-    if (contactsJson === null) {
-      console.log('pizda')
-    }
 
     if (contactsJson) {
       contacts = Object.keys(contactsJson).map(key => {
@@ -26,3 +22,10 @@ export const fetchContactsData = createAsyncThunk<ApiContacts[], void>(
     return contacts;
   }
 );
+
+export const createContact = createAsyncThunk<void, Contact>(
+  'contacts/create',
+  async (data) => {
+    await axiosApi.post('/contacts.json', data)
+  }
+)

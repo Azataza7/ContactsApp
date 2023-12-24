@@ -1,16 +1,18 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {ApiContacts} from '../../types';
-import {fetchContactsData} from './contactsThunks';
+import {createContact, fetchContactsData} from './contactsThunks';
 import {RootState} from '../../app/store';
 
 interface contactsState {
   contacts: ApiContacts[];
   fetchContactsLoading: boolean;
+  creatingLoading: boolean;
 }
 
 const initialState: contactsState = {
   contacts: [],
   fetchContactsLoading: false,
+  creatingLoading: false,
 };
 
 const contactsSlice = createSlice({
@@ -32,10 +34,20 @@ const contactsSlice = createSlice({
     builder.addCase(fetchContactsData.rejected, (state: contactsState) => {
       state.fetchContactsLoading = false;
     });
+    builder.addCase(createContact.pending, (state: contactsState) => {
+      state.creatingLoading = true;
+    });
+    builder.addCase(createContact.fulfilled, (state: contactsState) => {
+      state.creatingLoading = false;
+    });
+    builder.addCase(createContact.rejected, (state: contactsState) => {
+      state.creatingLoading = false;
+    });
   },
 });
 
 export const contactsReducer = contactsSlice.reducer;
 export const selectContact = (state: RootState) => state.contacts.contacts;
 export const selectFetchContactsLoading = (state: RootState) => state.contacts.fetchContactsLoading;
+export const selectCreatingLoading = (state: RootState) => state.contacts.creatingLoading;
 

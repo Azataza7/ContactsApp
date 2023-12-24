@@ -6,6 +6,8 @@ export interface ApiContacts {
   photo: string;
 }
 
+export type Contact = Omit<ApiContacts, 'id'>
+
 export interface ContactsJson {
   [id: string] : ApiContacts
 }
