@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {ApiContacts, Contact} from '../../types';
-import {createContact, fetchContactsData, fetchOneContact, updateContact} from './contactsThunks';
+import {createContact, deleteContact, fetchContactsData, fetchOneContact, updateContact} from './contactsThunks';
 import {RootState} from '../../app/store';
 
 interface contactsState {
@@ -9,6 +9,7 @@ interface contactsState {
   creatingLoading: boolean;
   oneContactLoading: boolean;
   updateContact: boolean;
+  deleteContact: boolean;
   selectedContact: ApiContacts | null;
   selectOneContact: Contact | null;
   isModalOpen: boolean;
@@ -20,6 +21,7 @@ const initialState: contactsState = {
   creatingLoading: false,
   oneContactLoading: false,
   updateContact: false,
+  deleteContact: false,
   selectedContact: null,
   selectOneContact: null,
   isModalOpen: false,
@@ -77,6 +79,15 @@ const contactsSlice = createSlice({
     builder.addCase(updateContact.rejected, (state: contactsState) => {
       state.updateContact = false;
     });
+    builder.addCase(deleteContact.pending, (state: contactsState) => {
+      state.deleteContact = true;
+    });
+    builder.addCase(deleteContact.fulfilled, (state: contactsState) => {
+      state.deleteContact = false;
+    });
+    builder.addCase(deleteContact.rejected, (state: contactsState) => {
+      state.deleteContact = false;
+    });
   },
 });
 
@@ -84,9 +95,10 @@ export const contactsReducer = contactsSlice.reducer;
 export const {openModal, closeModal} = contactsSlice.actions;
 
 export const selectContact = (state: RootState) => state.contacts.contacts;
-export const selectOneContact = (state: RootState) => state.contacts.selectOneContact
+export const selectOneContact = (state: RootState) => state.contacts.selectOneContact;
 export const selectFetchContactsLoading = (state: RootState) => state.contacts.fetchContactsLoading;
 export const selectCreatingLoading = (state: RootState) => state.contacts.creatingLoading;
 export const selectOneContactLoading = (state: RootState) => state.contacts.oneContactLoading;
 export const selectUpdateLoading = (state: RootState) => state.contacts.updateContact;
+export const selectDeleteLoading = (state: RootState) => state.contacts.deleteContact;
 

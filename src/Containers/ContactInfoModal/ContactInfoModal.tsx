@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from '../../app/hooks';
 import {deleteContact, fetchContactsData} from '../../store/contacts/contactsThunks';
 import {RootState} from '../../app/store';
+import {selectDeleteLoading} from '../../store/contacts/contactsSlice';
 
 interface Props {
   closeModal: () => void;
@@ -11,6 +12,7 @@ interface Props {
 const ContactInfoModal: React.FC<Props> = ({closeModal}) => {
   const dispatch = useAppDispatch();
   const contact = useAppSelector((state: RootState) => state.contacts.selectedContact);
+  const isLoading = useAppSelector(selectDeleteLoading);
 
   const handleDelete = async (id: string) => {
     try {
@@ -36,8 +38,16 @@ const ContactInfoModal: React.FC<Props> = ({closeModal}) => {
       </div>
       <div className="modal-buttons">
         <a className="btn close-btn" onClick={closeModal}/>
-        <Link to={'/edit/' + contact.id} onClick={closeModal} className="btn btn-secondary edit-btn"/>
-        <a className="btn btn-danger delete-btn" onClick={() => handleDelete(contact?.id)}/>
+        <Link
+          to={'/edit/' + contact.id}
+          onClick={closeModal}
+          className="btn btn-secondary edit-btn"
+          disabled={isLoading}/>
+        <Link
+          to={"/"}
+          className="btn btn-danger delete-btn"
+           onClick={() => handleDelete(contact?.id)}
+           disabled={isLoading}/>
       </div>
     </div>
   );
