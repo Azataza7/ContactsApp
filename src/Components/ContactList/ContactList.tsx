@@ -14,7 +14,6 @@ const ContactList = () => {
   const contacts: ApiContacts[] = useAppSelector(selectContact);
   const isLoading = useAppSelector(selectFetchContactsLoading);
   const dispatch = useAppDispatch();
-  const selectedContact = useSelector((state: RootState) => state.contacts.selectedContact);
   const isModalOpen = useSelector((state: RootState) => state.contacts.isModalOpen);
 
   const handleContactClick = (contact: ApiContacts) => {
@@ -35,7 +34,7 @@ const ContactList = () => {
         />
       ))}
       {isModalOpen && (
-        <ContactInfoModal contact={selectedContact} closeModal={() => dispatch(closeModal())}/>
+        <ContactInfoModal closeModal={() => dispatch(closeModal())}/>
       )}
     </div>
   );

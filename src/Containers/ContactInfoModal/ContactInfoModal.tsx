@@ -1,13 +1,27 @@
 import React from 'react';
-import {ApiContacts} from '../../types';
 import {Link} from 'react-router-dom';
+import {useAppDispatch, useAppSelector} from '../../app/hooks';
+import {deleteContact, fetchContactsData} from '../../store/contacts/contactsThunks';
+import {RootState} from '../../app/store';
 
 interface Props {
-  contact: ApiContacts | null;
   closeModal: () => void;
 }
 
-const ContactInfoModal: React.FC<Props> = ({contact, closeModal}) => {
+const ContactInfoModal: React.FC<Props> = ({closeModal}) => {
+  const dispatch = useAppDispatch();
+  const contact = useAppSelector((state: RootState) => state.contacts.selectedContact);
+
+  const handleDelete = async (id: string) => {
+    try {
+      await dispatch(deleteContact(id));
+      await dispatch(fetchContactsData());
+      closeModal();
+    } catch (e) {
+      console.log('Error: ' + e);
+    }
+  };
+
   if (!contact) return null;
 
   return (
@@ -22,8 +36,8 @@ const ContactInfoModal: React.FC<Props> = ({contact, closeModal}) => {
       </div>
       <div className="modal-buttons">
         <a className="btn close-btn" onClick={closeModal}/>
-        <Link to={"/edit/"+ contact.id} onClick={closeModal} className="btn btn-secondary edit-btn"/>
-        <a className="btn btn-danger delete-btn"/>
+        <Link to={'/edit/' + contact.id} onClick={closeModal} className="btn btn-secondary edit-btn"/>
+        <a className="btn btn-danger delete-btn" onClick={() => handleDelete(contact?.id)}/>
       </div>
     </div>
   );
