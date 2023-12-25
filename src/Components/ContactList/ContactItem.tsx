@@ -3,11 +3,16 @@ import {ApiContacts} from '../../types';
 
 interface Props {
   contact: ApiContacts;
+  onContactClick: (contact: ApiContacts) => void;
 }
 
-const ContactItem: React.FC<Props> = ({contact}) => {
+const ContactItem: React.FC<Props> = ({contact, onContactClick}) => {
+  const handleClick = () => {
+    onContactClick(contact);
+  };
+
   return (
-    <div className="contact-item">
+    <div className="contact-item" onClick={handleClick}>
       <div className="contact-profile">
         <img src={contact.photo} alt={contact.name + 'photo'}/>
       </div>

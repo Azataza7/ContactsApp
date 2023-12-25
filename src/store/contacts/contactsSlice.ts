@@ -7,21 +7,30 @@ interface contactsState {
   contacts: ApiContacts[];
   fetchContactsLoading: boolean;
   creatingLoading: boolean;
+  selectedContact: ApiContacts | null;
+  isModalOpen: boolean;
 }
 
 const initialState: contactsState = {
   contacts: [],
   fetchContactsLoading: false,
   creatingLoading: false,
+  selectedContact: null,
+  isModalOpen: false,
 };
 
 const contactsSlice = createSlice({
   name: 'contacts',
   initialState,
   reducers: {
-    getContacts: (state, action) => {
-      state.contacts = action.payload;
-    }
+    openModal: (state, action: PayloadAction<ApiContacts>) => {
+      state.selectedContact = action.payload;
+      state.isModalOpen = true;
+    },
+    closeModal: (state) => {
+      state.selectedContact = null;
+      state.isModalOpen = false;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchContactsData.pending, (state: contactsState) => {
@@ -47,6 +56,8 @@ const contactsSlice = createSlice({
 });
 
 export const contactsReducer = contactsSlice.reducer;
+export const {openModal, closeModal} = contactsSlice.actions
+
 export const selectContact = (state: RootState) => state.contacts.contacts;
 export const selectFetchContactsLoading = (state: RootState) => state.contacts.fetchContactsLoading;
 export const selectCreatingLoading = (state: RootState) => state.contacts.creatingLoading;

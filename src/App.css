@@ -56,3 +56,73 @@
   font-weight: 600;
 }
 
+.preloader {
+  position: absolute;
+  top: 50%;
+  left: 43%;
+  padding: 30px;
+}
+
+.contact-modal-window {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 320px;
+}
+
+.photo-profile img {
+  width: 200px;
+  height: 200px;
+}
+
+.modal-buttons {
+  text-align: right;
+}
+
+.modal-buttons button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-left: 10px;
+}
+
+.delete-btn {
+  background: url("./images/trash.svg") no-repeat center;
+}
+
+.edit-btn {
+  background: url("./images/edit.svg") no-repeat center;
+}
+
+.close-btn {
+  background: url("./images/x-icon.svg") no-repeat center;
+  border: 1px solid grey;
+
+  position: absolute;
+  top: 5px;
+  right: 6px;
+}
+
+.profile-body {
+  color: #242424;
+  padding: 5px;
+  font-size: 20px;
+}
+
+.email {
+  cursor: pointer;
+  display: block;
+  padding: 5px 5px 5px 25px;
+  text-decoration: none;
+  background: url("./images/mail_icon.svg") no-repeat top 8px left 0;
+}
+
+.phone {
+  padding: 5px 25px;
+  background: url("./images/phone_icon.svg") no-repeat top 4px left 0;
+}

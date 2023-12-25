@@ -1,4 +1,4 @@
-import './App.css'
+import './App.css';
 import {Routes, Route} from 'react-router-dom';
 import Header from './Components/Header/Header';
 import MainPage from './Containers/Main/MainPage';
@@ -20,7 +20,7 @@ const App = () => {
         )}/>
       </Routes>
     </>
-  )
-}
+  );
+};
 
-export default App
+export default App;

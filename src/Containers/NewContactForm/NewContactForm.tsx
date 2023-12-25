@@ -14,6 +14,7 @@ const NewContactForm = () => {
   const onSubmit = (contact: ApiContacts) => {
     dispatch(createContact(contact));
     dispatch(fetchContactsData())
+    navigate('/');
   };
 
   return (
