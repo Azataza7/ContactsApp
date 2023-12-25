@@ -22,8 +22,8 @@ const ContactInfoModal: React.FC<Props> = ({contact, closeModal}) => {
       </div>
       <div className="modal-buttons">
         <a className="btn close-btn" onClick={closeModal}/>
-        <Link to={"/edit/"+ contact.id} className="btn btn-secondary edit-btn"/>
-        <Link to={"/delete/"+ contact.id} className="btn btn-danger delete-btn"/>
+        <Link to={"/edit/"+ contact.id} onClick={closeModal} className="btn btn-secondary edit-btn"/>
+        <a className="btn btn-danger delete-btn"/>
       </div>
     </div>
   );
