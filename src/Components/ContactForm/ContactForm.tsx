@@ -1,37 +1,39 @@
-import React, {useState} from 'react';
-import {Contact} from '../../types';
+import React, { useState } from 'react';
+import { Contact } from '../../types';
+
+const DEFAULTPHOTO = 'https://static.thenounproject.com/png/854888-200.png';
 
 interface Props {
   onSubmit: (contact: Contact) => void;
   isLoading: boolean;
+  contact: Contact | null;
 }
 
-const initialState: Contact = {
-  name: '',
-  phone: '',
-  email: '',
-  photo: '',
-};
-
-const ContactForm: React.FC<Props> = ({onSubmit, isLoading}) => {
-  const [contact, setContact] = useState(initialState);
+const ContactForm: React.FC<Props> = ({ onSubmit, isLoading, contact }) => {
+  const [contactData, setContactData] = useState<Contact | null>(contact || {
+    name: '',
+    phone: '',
+    email: '',
+    photo: '',
+  });
 
   const changeDish = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setContact((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
+    const { name, value } = e.target;
+
+    setContactData((prevData) => ({
+      ...prevData!,
+      [name]: value,
     }));
   };
 
-
   const onFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (isLoading) return;
+    if (isLoading || !contactData) return;
 
-    onSubmit(contact);
+    onSubmit(contactData);
   };
 
-  let form = (
+  return (
     <form className="form" onSubmit={onFormSubmit}>
       <div className="form-group">
         <label htmlFor="name">Name</label>
@@ -40,7 +42,7 @@ const ContactForm: React.FC<Props> = ({onSubmit, isLoading}) => {
           name="name"
           id="name"
           className="form-control"
-          value={contact?.name}
+          value={contactData?.name}
           onChange={changeDish}
         />
       </div>
@@ -51,7 +53,7 @@ const ContactForm: React.FC<Props> = ({onSubmit, isLoading}) => {
           name="phone"
           id="phone"
           className="form-control"
-          value={contact?.phone}
+          value={contactData?.phone}
           onChange={changeDish}
         />
       </div>
@@ -62,30 +64,30 @@ const ContactForm: React.FC<Props> = ({onSubmit, isLoading}) => {
           name="email"
           id="email"
           className="form-control"
-          value={contact?.email}
+          value={contactData?.email}
           onChange={changeDish}
         />
       </div>
       <div className="form-group">
-        <label htmlFor="Photo">Photo</label>
+        <label htmlFor="photo">Photo</label>
         <input
           type="url"
           name="photo"
           id="photo"
           className="form-control"
-          value={contact?.photo}
+          value={contactData?.photo}
           onChange={changeDish}
         />
       </div>
-      <button className="btn btn-success" type="submit" disabled={isLoading}>
-        {isLoading ? 'Saving...' : 'Save'}
-      </button>
+      <div className="photo-preview save-btn">
+        <div className="photo-preview-item">
+          <img src={contactData?.photo || DEFAULTPHOTO} alt={(contactData?.name || '') + ' preview-photo'} />
+        </div>
+        <button className="btn btn-success" type="submit" disabled={isLoading}>
+          {isLoading ? 'Saving...' : 'Save'}
+        </button>
+      </div>
     </form>
-  )
-  return (
-    <>
-      {form}
-    </>
   );
 };
 

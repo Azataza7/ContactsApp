@@ -1,5 +1,6 @@
 import React from 'react';
 import {ApiContacts} from '../../types';
+import {Link} from 'react-router-dom';
 
 interface Props {
   contact: ApiContacts | null;
@@ -20,9 +21,9 @@ const ContactInfoModal: React.FC<Props> = ({contact, closeModal}) => {
         <a className="phone">Phone: {contact.phone}</a>
       </div>
       <div className="modal-buttons">
-        <button className="btn close-btn" onClick={closeModal}/>
-        <button className="btn btn-secondary edit-btn"/>
-        <button className="btn btn-danger delete-btn"/>
+        <a className="btn close-btn" onClick={closeModal}/>
+        <Link to={"/edit/"+ contact.id} className="btn btn-secondary edit-btn"/>
+        <Link to={"/delete/"+ contact.id} className="btn btn-danger delete-btn"/>
       </div>
     </div>
   );

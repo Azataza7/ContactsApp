@@ -4,12 +4,13 @@ import {createContact, fetchContactsData} from '../../store/contacts/contactsThu
 import {ApiContacts} from '../../types';
 import {useAppDispatch, useAppSelector} from '../../app/hooks';
 import {useNavigate} from 'react-router-dom';
-import {selectCreatingLoading} from '../../store/contacts/contactsSlice';
+import {selectCreatingLoading, selectOneContact} from '../../store/contacts/contactsSlice';
 
 const NewContactForm = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const createLoading = useAppSelector(selectCreatingLoading);
+  const contact = useAppSelector(selectOneContact);
 
   const onSubmit = (contact: ApiContacts) => {
     dispatch(createContact(contact));
@@ -19,7 +20,7 @@ const NewContactForm = () => {
 
   return (
     <>
-      <ContactForm onSubmit={onSubmit} isLoading={createLoading}/>
+      <ContactForm onSubmit={onSubmit} isLoading={createLoading} contact={contact}/>
     </>
   );
 };

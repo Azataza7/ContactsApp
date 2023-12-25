@@ -26,6 +26,21 @@ export const fetchContactsData = createAsyncThunk<ApiContacts[], void>(
 export const createContact = createAsyncThunk<void, Contact>(
   'contacts/create',
   async (data) => {
-    await axiosApi.post('/contacts.json', data)
+    await axiosApi.post('/contacts.json', data);
   }
-)
+);
+
+export const fetchOneContact = createAsyncThunk<Contact, string>(
+  'contacts/oneContact',
+  async (id) => {
+    const response = await axiosApi.get(`contacts/${id}.json`);
+    return response.data;
+  }
+);
+
+export const updateContact = createAsyncThunk<void, {id: string, data: ApiContacts}>(
+  'contacts/update',
+  async ({ id, data }) => {
+    await axiosApi.put(`/contacts/${id}.json`, data);
+  }
+);
